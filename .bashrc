@@ -1,3 +1,22 @@
+#======================================
+#
+#  ALIASES AND FUNCTIONS
+#
+#======================================
+#------------------
+# Personal Tweaks
+#------------------
+alias rm='rm -i'
+alias mv='mv -i'
+alias mkdir='mkdir -p'
+
+#-------------------
+# Anonymity Aliases
+#-------------------
+alias firefox='sudo systemctl start tor && proxychains firefox'
+alias viproxy='sudo vim /etc/proxychains.conf'
+
+
 # random art and fortune upon login
 command fortune -a | fmt -80 -s | $(shuf -n 1 -e cowsay cowthink) -$(shuf -n 1 -e b d g p s t w y) -f $(shuf -n 1 -e $(cowsay -l | tail -n +2)) -n
 
@@ -215,3 +234,4 @@ export HISTIGNORE="&:bg:fg:ll:h"
 export HISTTIMEFORMAT="$(echo -e ${BCyan})[%d/%m %H:%M:%S]$(echo -e ${NC}) "
 export HISTCONTROL=ignoredups
 export HOSTFILE=$HOME/.hosts    # Put a list of remote hosts in ~/.hosts
+export EDITOR=vim
