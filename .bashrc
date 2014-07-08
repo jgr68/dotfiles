@@ -1,29 +1,30 @@
+
 #======================================
 #
 #  ALIASES AND FUNCTIONS
 #
 #======================================
-#------------------
-# Personal Tweaks
-#------------------
-alias rm='rm -i'
-alias mv='mv -i'
-alias mkdir='mkdir -p'
-
-#-------------------
-# Anonymity Aliases
-#-------------------
-alias firefox='sudo systemctl start tor && proxychains firefox'
-alias viproxy='sudo vim /etc/proxychains.conf'
-
-
-# random art and fortune upon login
-command fortune -a | fmt -80 -s | $(shuf -n 1 -e cowsay cowthink) -$(shuf -n 1 -e b d g p s t w y) -f $(shuf -n 1 -e $(cowsay -l | tail -n +2)) -n
-
 # Source global definitions (if any)
 if [ -f /etc/bashrc ]; then
 	. /etc/bashrc
 fi
+
+export TERM=xterm
+set -o vi
+
+#------------------
+# Aliases
+#------------------
+alias rm='rm -i'
+alias mv='mv -i'
+alias mkdir='mkdir -p'
+alias giddit='git pull'
+alias git\ tug='git pull'
+alias pushit='git push'
+alias lsa='ls -halt'
+
+# random art and fortune upon login
+command fortune -a | fmt -80 -s | $(shuf -n 1 -e cowsay cowthink) -$(shuf -n 1 -e b d g p s t w y) -f $(shuf -n 1 -e $(cowsay -l | tail -n +2)) -n
 
 # enable options
 shopt -s cdspell
@@ -85,6 +86,13 @@ function _exit()              # Function to run upon exit of shell.
 trap _exit EXIT
 
 force_color_prompt=yes 
+
+# mock stuff
+alias mock="mock -r ${USER}";
+
+# greeting
+echo "Welcome, "$USER"!";
+echo "You are now logged into "$localmachine".";
 
 #-------------------------------------------------------------
 # Shell Prompt - for many examples, see:
@@ -191,7 +199,6 @@ function disk_color()
         # Current directory is size '0' (like /proc, /sys etc).
     fi
 }
-
 # Returns a color according to running/suspended jobs.
 function job_color()
 {
