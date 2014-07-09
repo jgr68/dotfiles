@@ -54,9 +54,7 @@ DGIT_REPO='dotfiles'
 
 function dotify {
 
-	echo "$DGIT_USER";
-	echo "$DGIT_REPO";
 	for host in "$@"; do
-		ssh -t "jgr68@$host" "'rm -rf labrynth && git clone git@github.com:jgr68/labrynth && mv labrynth/dotfile-payload.sh . && rm -rf labrynth && ./dotfile-payload.sh -r $DGIT_REPO -g $DGIT_USER && rm .dotfile-payload.sh'"
+		ssh -t "$(whoami)@$host" "rm -rf labrynth && git clone git@github.com:jgr68/labrynth && mv labrynth/dotfile-payload.sh . && rm -rf labrynth && ./dotfile-payload.sh -r $DGIT_REPO -g $DGIT_USER && rm .dotfile-payload.sh"
 	done	
 }
