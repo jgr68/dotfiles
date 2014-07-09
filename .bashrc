@@ -46,3 +46,10 @@ cl() {
 
 # set the ps1 to something awesome
 PS1="[\u@\h \w]\n\$ ";
+
+function dotify {
+
+	for host in "$@"; do
+		ssh -t "jgr68@$host" 'rm -rf labrynth && git clone git@github.com:jgr68/labrynth && mv labrynth/dotfile-payload.sh . && rm -rf labrynth && ./dotfile-payload.sh'
+	done	
+}
