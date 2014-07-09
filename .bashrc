@@ -47,9 +47,16 @@ cl() {
 # set the ps1 to something awesome
 PS1="[\u@\h \w]\n\$ ";
 
+
+# dotify environment variables
+DGIT_USER='jgr68'
+DGIT_REPO='dotfiles'
+
 function dotify {
 
+	echo "$DGIT_USER";
+	echo "$DGIT_REPO";
 	for host in "$@"; do
-		ssh -t "jgr68@$host" 'rm -rf labrynth && git clone git@github.com:jgr68/labrynth && mv labrynth/dotfile-payload.sh . && rm -rf labrynth && ./dotfile-payload.sh && rm .dotfile-payload.sh'
+		ssh -t "jgr68@$host" 'rm -rf labrynth && git clone git@github.com:jgr68/labrynth && mv labrynth/dotfile-payload.sh . && rm -rf labrynth && ./dotfile-payload.sh -r $DGIT_REPO -g $DGIT_USER && rm .dotfile-payload.sh'
 	done	
 }
