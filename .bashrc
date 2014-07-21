@@ -8,6 +8,11 @@ if [ -f /etc/bashrc ]; then
 	. /etc/bashrc
 fi
 
+# source local definitions (if any)
+if [ -f .localrc ]; then
+	. .localrc
+fi
+
 export TERM=xterm
 set -o vi
 
