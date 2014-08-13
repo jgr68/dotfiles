@@ -17,8 +17,8 @@ export TERM=xterm
 set -o vi
 
 # display version info
-echo "You are running BASH $BASH_VERSION";
-last -n 20
+#echo "You are running BASH $BASH_VERSION";
+#last -n 20
 #------------------
 # Aliases
 #------------------
@@ -28,9 +28,11 @@ alias mkdir='mkdir -p'
 alias giddit='git pull'
 alias pushit='git push'
 alias lsa='ls -halt'
+alias burp='java -jar -Xmx1024m ~/scripts/burpsuite_free_v1.6.jar'
+alias fireburp='~/local/firefox/firefox'
 
 # random art and fortune upon login
-command fortune -a | fmt -80 -s | $(shuf -n 1 -e cowsay cowthink) -$(shuf -n 1 -e b d g p s t w y) -f $(shuf -n 1 -e $(cowsay -l | tail -n +2)) -n
+#command fortune -a | fmt -80 -s | $(shuf -n 1 -e cowsay cowthink) -$(shuf -n 1 -e b d g p s t w y) -f $(shuf -n 1 -e $(cowsay -l | tail -n +2)) -n
 
 # mock stuff
 alias mock="mock -r ${USER}";
@@ -49,5 +51,80 @@ cl() {
 	fi
 }
 
+
 # set the ps1 to something awesome
 PS1="[\u@\h \w]\n\$ ";
+
+
+
+wprepd() {
+
+	if [[ "$#" -ne 1 ]]; then
+		echo "prep-devel takes exactly 1 argument"
+		return;
+	fi
+	
+	webdir=$1;
+	if [[ -z "$webdir" ]]; then
+		echo "Please enter directory as the argument."
+		return;
+	fi
+
+	if ! [[ -d "$webdir" ]]; then
+		echo "That's not a fucking directory, numnuts."
+		return;
+	fi
+
+	chown apache:studsys "$webdir";
+	chmod 775 "$webdir";
+	cd "$webdir";
+	find . -print0 | xargs -0 chown apache:studsys
+	find . -type f -print0 | xargs -0 chmod 664
+	find . -type d -print0 | xargs -0 chmod 775
+
+	# if a .git directory exists, we need to use slightly different permissions
+	if [[ -d ".git" ]]; then
+		chown "($whoami):studsys" ".git";
+		cd ".git";
+		find . -print0 | xargs -0 chown "$(whoami):studsys"
+		cd ..
+	fi
+	
+	cd ..
+	
+}
+
+wprepp() {
+
+	if [[ "$#" -ne 1 ]]; then
+		echo "prep-devel takes exactly 1 argument"
+		return;
+	fi
+	
+	webdir=$1;
+	if [[ -z "$webdir" ]]; then
+		echo "Please enter directory as the argument."
+		return;
+	fi
+
+	if ! [[ -d "$webdir" ]]; then
+		echo "That's not a fucking directory, numnuts."
+		return;
+	fi
+
+	chown apache:studsys "$webdir";
+	chmod 755 "$webdir";
+	cd "$webdir";
+	find . -print0 | xargs -0 chown apache:studsys
+	find . -type f -print0 | xargs -0 chmod 644
+	find . -type d -print0 | xargs -0 chmod 755
+
+	# if a .git directory exists, we need to use slightly different permissions
+	if [[ -d ".git" ]]; then
+		rm -rf ".git";
+	fi
+	
+	cd ..
+	
+}
+
